@@ -1,0 +1,48 @@
+<mat-card >
+
+
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" >
+    <h2>signUp to Posting</h2>
+    <mat-form-field class="input">
+      <input
+      matInput
+      type="email"
+      name="emnail"
+      formControlName="email"
+      placeholder="E-mail ">
+      <mat-error *ngIf="signUpForm.get('email').hasError('required')" >must have to fill</mat-error>
+      <mat-error *ngIf="signUpForm.get('email').hasError('email')" >Invalid Emial</mat-error>
+    </mat-form-field>
+
+<br>
+
+    <mat-form-field class="input">
+      <input
+      matInput
+      [type]=" hide ? 'password' : 'text'"
+      name="password"
+      formControlName="password"
+      placeholder="Password ">
+      <button mat-icon-button matSuffix (click)="hide = !hide" >
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      <mat-error *ngIf="signUpForm.get('password').hasError('required')" >Enter password </mat-error>
+
+    </mat-form-field>
+<br>
+
+
+<br>
+    <button type="submit" color="primary" mat-raised-button >Submit </button>
+  </form  >
+
+
+  <button
+   mat-stroked-button
+    color='primary'
+    type="button"
+    class="mt"
+      [routerLink]="['/login']" routerLinkActive="router-link-active">
+    Have an Account
+  </button>
+</mat-card>

@@ -1,0 +1,53 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+
+<mat-card class="example-card" *ngIf="!isLoading">
+
+
+    <mat-expansion-panel *ngFor="let post of posts">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+
+          <h1>{{post.title}}</h1>
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+         <h1>{{post._id}} </h1>
+        </mat-panel-description> -->
+
+      </mat-expansion-panel-header>
+      {{post.content}}
+      <div>
+              <img [src]="post.image"  [alt]="post.title" height="200">
+      </div>
+
+      <!-- <mat-action-row >
+
+        <button [disabled]='!haveToken' mat-raised-button color="primary"
+        [routerLink]="['/edit',post._id]"
+        >Edit</button>
+
+        <button mat-raised-button color="warn"
+        (click)='onDelete(post._id)' [disabled]='!haveToken' >Delete</button>
+      </mat-action-row> -->
+
+
+      <mat-action-row *ngIf="isAuthenticated && (post.creator === userId)">
+
+        <button mat-raised-button color="primary"
+        [routerLink]="isAuthenticated ? '/edit/'+post._id:'/login'"
+        >Edit</button>
+
+        <button mat-raised-button color="warn"
+        (click)='onDelete(post._id)'  >Delete</button>
+      </mat-action-row>
+
+
+
+    </mat-expansion-panel>
+
+</mat-card>
+<mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)=onChangePage($event)>
+</mat-paginator>

@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+
+  <span>Posting </span>
+  <span class="example-spacer"></span>
+  <button *ngIf="isAuthenticated" mat-button  [routerLink]="['create']" routerLinkActive="router-link-active">
+    Create
+  </button>
+
+  <button *ngIf="!isAuthenticated" mat-button  [routerLink]="['login']" routerLinkActive="router-link-active">
+    Create
+  </button>
+
+
+
+
+  <button mat-button  [routerLink]="['List']" routerLinkActive="router-link-active" >
+    List
+  </button>
+
+
+  <button mat-button *ngIf="!isAuthenticated" [routerLink]="['login']" routerLinkActive="router-link-active">
+    Login
+  </button>
+
+  <button mat-button *ngIf="isAuthenticated"  (click)="logOut()"  >logout</button>
+
+
+</mat-toolbar>

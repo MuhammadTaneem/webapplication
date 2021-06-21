@@ -1,0 +1,24 @@
+.mat-card{
+  width: 17rem;
+  /* background-color: blue; */
+  text-align: center;
+  margin: auto;
+  margin-top: 3rem;
+  border: 1px solid #b0b0b08f;
+
+}
+
+.input{
+  width: 95%;
+}
+
+h2{
+  margin-top: 1.5rem;
+}
+.mt{
+  margin: 3rem;
+}
+
+
+
+
