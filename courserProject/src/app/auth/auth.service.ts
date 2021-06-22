@@ -4,7 +4,9 @@ import { Signup} from'./signUp.model'
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {environment} from '../../environments/environment';
 
+const BACKEND_URL = environment.apiUrl+'user/';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,7 @@ export class AuthService {
   }
 
   creatUser(user:Signup){
-    this.http.post<{msg:string}>('http://localhost:3000/api/user/signup',user)
+    this.http.post<{msg:string}>(BACKEND_URL+'signup',user)
     .subscribe((userData)=>{
       console.log(userData.msg);
       this.openSnackBar(userData.msg);
@@ -54,7 +56,7 @@ export class AuthService {
       email:email,
       password:password
     }
-    this.http.post<{msg:string,token:string,expiresIn:number,userId:string}>('http://localhost:3000/api/user/login',user)
+    this.http.post<{msg:string,token:string,expiresIn:number,userId:string}>(BACKEND_URL+'login',user)
     .subscribe((userData)=>{
       // console.log(userData.msg);
       const token = userData.token;

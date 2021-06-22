@@ -4,7 +4,9 @@ import { Post } from './post.model';
 import { HttpClient} from '@angular/common/http'
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {environment} from '../environments/environment';
 
+const BACKEND_URL = environment.apiUrl+'posts/';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class PostService {
   posts:Post[]=[];
   // post:Post;
+
 
   updatedPost = new Subject<{posts:Post[],postNumber:number}>();
   constructor(private http:HttpClient,
@@ -24,7 +27,7 @@ export class PostService {
   getPosts(pageSize :number, currentPage:number){
 
     const queryParams = `?pageSize=${pageSize}&currentPage=${currentPage}`;
-    this.http.get<{posts:Post[],postNumber:number}>('http://localhost:3000/api/posts'+queryParams)
+    this.http.get<{posts:Post[],postNumber:number}>(BACKEND_URL+queryParams)
     .subscribe((postData)=>{
       this.posts = postData.posts;
       this.updatedPost.next({posts:[...this.posts],postNumber:postData.postNumber});
@@ -35,14 +38,14 @@ export class PostService {
 // get one post
 getPost(_id:string){
 
-  return this.http.get<{post:Post}>('http://localhost:3000/api/posts/'+_id);
+  return this.http.get<{post:Post}>(BACKEND_URL+_id);
 
 }
 
 
 openSnackBar(msg){
 
-  this.snackBar.open(msg,'Dismis',{duration : 1000});
+  this.snackBar.open(msg,'Dismis',{duration : 3000});
 }
 
   //  save a new item  in database
@@ -54,7 +57,7 @@ openSnackBar(msg){
      postForm.append("image",p.image,p.title);
 
 
-    this.http.post<{msg:string}>('http://localhost:3000/api/posts',postForm)
+    this.http.post<{msg:string}>(BACKEND_URL,postForm)
     .subscribe((postData)=>{
       this.openSnackBar(postData.msg);
       this.refresh();
@@ -67,7 +70,7 @@ openSnackBar(msg){
   // delete post
 
   deletePost(_id:string){
-    this.http.delete<{msg:string}>('http://localhost:3000/api/posts/'+_id).subscribe((postData)=>{
+    this.http.delete<{msg:string}>(BACKEND_URL+_id).subscribe((postData)=>{
       this.openSnackBar(postData.msg);
     this.refresh();
   })
@@ -89,7 +92,7 @@ editPost(post:Post){
     else{
       postData= post;
     }
-  this.http.put<{msg:string}>('http://localhost:3000/api/posts/'+post._id,postData)
+  this.http.put<{msg:string}>(BACKEND_URL+post._id,postData)
   .subscribe((postData)=>{
     this.openSnackBar(postData.msg);
     this.router.navigate(['/']);
